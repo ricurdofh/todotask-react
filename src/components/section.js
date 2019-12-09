@@ -9,12 +9,12 @@ export default ({id, name}) => (
     <TasksContext.Consumer>{({tasks, setDelTask}) => (
       <div
         ref={provided.innerRef}
-        style={snapshot.isDraggingOver ? styles : {}}
+        style={snapshot.isDraggingOver ? styles.drop : {}}
         {...provided.droppableProps}
         id={id}
         className="drop">
         <div className="title">
-          <h2>{name}</h2>
+          <h2 style={snapshot.isDraggingOver ? styles.h1 : {}}>{name}</h2>
         </div>
         {tasks.filter(task => task.status === id).map((task, i) => (
           <Task id={task.id} task={task.task} item={i}  key={i} onClose={setDelTask} />
@@ -26,9 +26,14 @@ export default ({id, name}) => (
   </Droppable>
 )
 
-const styles = { 
-  borderColor: '#000',
-  borderStyle: 'dashed',
-  borderWidth: '5px',
-  opacity: .4
+const styles = {
+  drop: {
+    borderColor: '#000',
+    borderStyle: 'dashed',
+    borderWidth: '5px',
+    opacity: .4
+  },
+  h1: {
+    marginTop: 0
+  }
 }
