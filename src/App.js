@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { DragDropContext } from 'react-beautiful-dnd';
+import Sections from './components/sections';
+import Modal from './components/modal';
+import TasksContextProvider, { TasksContext } from './components/tasksContext';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Simple to-do manager</h1>
+        <p>Drag and drop items to the status you want or add a new task</p>
+        <a href="#" className="btn btn-lg btn-default" data-toggle="modal" data-target="#basicModal">Add new task</a>
       </header>
+      <TasksContextProvider>
+        <TasksContext.Consumer>{({onDragEnd}) => (
+          <DragDropContext onDragEnd={onDragEnd}>
+              <Sections />
+          </DragDropContext>
+        )}</TasksContext.Consumer>
+        <Modal />
+      </TasksContextProvider>
     </div>
   );
-}
+};
 
 export default App;
